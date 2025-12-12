@@ -1,57 +1,138 @@
 /* Wrapper principal */
 .aec-wrapper {
-    position: relative;
-    max-width: 320px;
+    max-width: 100%;
     margin: 0 auto;
-    font-family: sans-serif;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    /* Reducido de 20px */
     background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
 }
 
-/* Header de navegación */
+/* Header & Nav */
 .aec-header-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    /* Reducido espacio */
 }
-.aec-month-label { font-weight: bold; text-transform: capitalize; }
+
+.aec-month-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    color: #333;
+    letter-spacing: 0.5px;
+}
+
 .aec-nav-btn {
-    background: none; border: none; cursor: pointer; color: #555; font-size: 1.2em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #777;
+    font-size: 1.1em;
+    padding: 0 10px;
+    transition: color 0.2s;
 }
-.aec-nav-btn:hover { color: #000; }
+
+.aec-nav-btn:hover {
+    color: #2271b1;
+}
 
 /* Filtro */
-.aec-controls { margin-bottom: 10px; text-align: center; }
-.aec-filter-select { width: 100%; font-size: 0.9em; padding: 4px; }
+.aec-controls {
+    margin-top: 10px;
+    /* Reducido */
+    text-align: center;
+}
 
-/* Grid */
-.aec-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
-.aec-day-name { font-size: 0.75em; font-weight: bold; color: #888; }
+.aec-filter-select {
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 0.85em;
+    background-color: #fafafa;
+}
 
+/* Layout Flexible */
+.aec-body-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Columna Calendario */
+.aec-grid-container {
+    width: 100%;
+}
+
+/* Grid Visual */
+.aec-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    /* Gap ligeramente reducido */
+    text-align: center;
+}
+
+.aec-day-name {
+    font-size: 0.75em;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+/* ESTILOS DE DÍA COMPACTOS */
 .aec-day {
-    position: relative;
-    min-height: 40px;
-    border: 1px solid transparent;
+    min-height: 45px;
+    /* ANTES: 60px -> AHORA: 45px (Más compacto) */
+    border-radius: 6px;
+    background: #f9f9f9;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding-top: 4px;
+    /* Padding reducido */
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
-.aec-day.is-today { 
-    background-color: #f0f7ff; 
-    border-color: #0073aa; 
-    border-radius: 4px;
+.aec-day:hover {
+    background: #eee;
+}
+
+.aec-day.selected {
+    background: #fff;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.2);
+}
+
+.aec-day.is-today {
+    background: #e6f0fa;
+    color: #2271b1;
     font-weight: bold;
 }
 
-.aec-day-number { font-size: 0.85em; margin-bottom: 2px; }
+.aec-day.aec-empty {
+    background: transparent;
+    cursor: default;
+}
 
-/* Contenedor de iconos dentro del día */
+.aec-day-number {
+    font-size: 0.9em;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+/* Iconos */
 .aec-icons-container {
     display: flex;
     flex-wrap: wrap;
@@ -60,32 +141,101 @@
 }
 
 .aec-event-icon {
-    font-size: 0.7em; /* Iconos pequeños */
+    font-size: 0.6em;
+}
+
+/* Sección Detalles */
+.aec-day-details {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    min-height: 100px;
+}
+
+/* --- MEDIA QUERY: PANTALLAS GRANDES --- */
+@media (min-width: 800px) {
+    .aec-body-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .aec-grid-container {
+        flex: 1;
+        min-width: 350px;
+    }
+
+    .aec-day-details {
+        flex: 1;
+        border-top: none;
+        border-left: 1px solid #eee;
+        padding-top: 0;
+        padding-left: 20px;
+        /* Altura máxima reducida para igualar al calendario más compacto */
+        max-height: 400px;
+        overflow-y: auto;
+    }
+}
+
+/* Lista interna */
+.aec-details-placeholder,
+.aec-details-empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    font-size: 0.95em;
+    margin-top: 20px;
+}
+
+.aec-details-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.aec-detail-item {
+    background: #fff;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 6px;
+    padding: 10px;
+    /* Padding reducido */
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    transition: transform 0.1s;
+}
+
+.aec-detail-item:hover {
+    transform: translateY(-1px);
+}
+
+.aec-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 1em;
+    color: #222;
+}
+
+.aec-detail-content {
+    font-size: 0.9em;
     color: #555;
+    margin: 0;
+    line-height: 1.4;
 }
 
-/* Tooltip Hover */
-.aec-tooltip {
-    display: none;
-    position: absolute;
-    bottom: 100%; left: 50%; transform: translateX(-50%);
-    width: 200px; background: #333; color: #fff;
-    padding: 8px; border-radius: 4px; z-index: 99;
-    text-align: left; font-size: 0.8em;
-}
-.aec-day:hover .aec-tooltip { display: block; }
-
-.aec-tooltip-item { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.aec-tooltip-item i { color: #aaa; }
-
-/* Loading overlay */
+/* Loading */
 .aec-loading {
     display: none;
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255,255,255,0.8);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2em; color: #0073aa;
-    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    color: #2271b1;
+    z-index: 10;
+    border-radius: 12px;
 }
-/* Ocultar por defecto, JS lo muestra */
-.aec-wrapper:not(.loading) .aec-loading { display: none; }
