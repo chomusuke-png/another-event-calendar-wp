@@ -1,0 +1,91 @@
+/* Wrapper principal */
+.aec-wrapper {
+    position: relative;
+    max-width: 320px;
+    margin: 0 auto;
+    font-family: sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+}
+
+/* Header de navegación */
+.aec-header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.aec-month-label { font-weight: bold; text-transform: capitalize; }
+.aec-nav-btn {
+    background: none; border: none; cursor: pointer; color: #555; font-size: 1.2em;
+}
+.aec-nav-btn:hover { color: #000; }
+
+/* Filtro */
+.aec-controls { margin-bottom: 10px; text-align: center; }
+.aec-filter-select { width: 100%; font-size: 0.9em; padding: 4px; }
+
+/* Grid */
+.aec-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.aec-day-name { font-size: 0.75em; font-weight: bold; color: #888; }
+
+.aec-day {
+    position: relative;
+    min-height: 40px;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 4px;
+}
+
+.aec-day.is-today { 
+    background-color: #f0f7ff; 
+    border-color: #0073aa; 
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.aec-day-number { font-size: 0.85em; margin-bottom: 2px; }
+
+/* Contenedor de iconos dentro del día */
+.aec-icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+}
+
+.aec-event-icon {
+    font-size: 0.7em; /* Iconos pequeños */
+    color: #555;
+}
+
+/* Tooltip Hover */
+.aec-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%; left: 50%; transform: translateX(-50%);
+    width: 200px; background: #333; color: #fff;
+    padding: 8px; border-radius: 4px; z-index: 99;
+    text-align: left; font-size: 0.8em;
+}
+.aec-day:hover .aec-tooltip { display: block; }
+
+.aec-tooltip-item { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.aec-tooltip-item i { color: #aaa; }
+
+/* Loading overlay */
+.aec-loading {
+    display: none;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2em; color: #0073aa;
+    z-index: 100;
+}
+/* Ocultar por defecto, JS lo muestra */
+.aec-wrapper:not(.loading) .aec-loading { display: none; }
