@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Another Event Calendar
  * Description: Widget de calendario configurable con tooltips de eventos.
- * Version: 1.0.0
+ * Version: 2.0
  * Author: Tu Nombre
  * Text Domain: another-event-calendar
  */
@@ -18,12 +18,14 @@ require_once AEC_PATH . 'includes/class-aec-cpt.php';
 require_once AEC_PATH . 'includes/class-aec-settings.php';
 require_once AEC_PATH . 'includes/class-aec-display.php';
 require_once AEC_PATH . 'includes/class-aec-widget.php';
-require_once AEC_PATH . 'includes/class-aec-ajax.php'; // Nueva clase
+require_once AEC_PATH . 'includes/class-aec-ajax.php';
+require_once AEC_PATH . 'includes/class-aec-shortcode.php';
 
 function aec_init_plugin() {
     new AEC_CPT();
     new AEC_Settings();
-    new AEC_Ajax(); // Inicializar AJAX
+    new AEC_Ajax(); 
+    new AEC_Shortcode();
     
     add_action( 'widgets_init', function() {
         register_widget( 'AEC_Widget' );
