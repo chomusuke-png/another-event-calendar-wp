@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Another Event Calendar
  * Description: Widget de calendario configurable con tooltips de eventos.
- * Version: 2.0
- * Author: Tu Nombre
+ * Version: 2.1
+ * Author: Zumito
  * Text Domain: another-event-calendar
  */
 
