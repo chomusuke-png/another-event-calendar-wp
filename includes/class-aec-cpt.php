@@ -30,9 +30,9 @@ class AEC_CPT {
         <div class="form-field">
             <label>Icono</label>
             <?php 
-            // Usamos el nuevo componente
-            if ( class_exists( 'AEC_Icon_Picker' ) ) {
-                AEC_Icon_Picker::render( 'aec_icon_class', '' );
+            // CORRECCIÓN: Usar Simple_Icon_Picker
+            if ( class_exists( 'Simple_Icon_Picker' ) ) {
+                Simple_Icon_Picker::render( 'aec_icon_class', '' );
             }
             ?>
         </div>
@@ -54,9 +54,9 @@ class AEC_CPT {
             <th scope="row"><label>Icono</label></th>
             <td>
                 <?php 
-                // Usamos el nuevo componente con el valor actual
-                if ( class_exists( 'AEC_Icon_Picker' ) ) {
-                    AEC_Icon_Picker::render( 'aec_icon_class', $current_icon );
+                // CORRECCIÓN: Usar Simple_Icon_Picker
+                if ( class_exists( 'Simple_Icon_Picker' ) ) {
+                    Simple_Icon_Picker::render( 'aec_icon_class', $current_icon );
                 }
                 ?>
             </td>
@@ -68,13 +68,11 @@ class AEC_CPT {
         <?php
     }
 
-    // Guardado de metadatos se mantiene igual
     public function save_category_meta( $term_id ) {
         if ( isset( $_POST['aec_icon_class'] ) ) update_term_meta( $term_id, 'aec_icon_class', sanitize_text_field( $_POST['aec_icon_class'] ) );
         if ( isset( $_POST['aec_category_color'] ) ) update_term_meta( $term_id, 'aec_category_color', sanitize_hex_color( $_POST['aec_category_color'] ) );
     }
 
-    // Meta Box Fecha se mantiene igual
     public function add_date_meta_box() { add_meta_box( 'aec_event_date', 'Fecha del Evento', array( $this, 'render_meta_box' ), 'aec_event', 'side', 'high' ); }
     public function render_meta_box( $post ) { $val = get_post_meta( $post->ID, '_aec_event_date', true ); echo '<input type="date" name="aec_event_date" value="' . esc_attr( $val ) . '" style="width:100%;">'; }
     public function save_date_meta_box( $post_id ) { if ( isset( $_POST['aec_event_date'] ) ) update_post_meta( $post_id, '_aec_event_date', sanitize_text_field( $_POST['aec_event_date'] ) ); }

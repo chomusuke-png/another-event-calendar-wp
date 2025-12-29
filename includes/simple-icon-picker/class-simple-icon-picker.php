@@ -1,118 +1,90 @@
 <?php
 /**
  * Componente Reutilizable: Simple Icon Picker
- * Descripción: Selector de iconos visual con buscador.
+ * Descripción: Selector de iconos con pestañas y categorías.
  */
 
 if ( ! class_exists( 'Simple_Icon_Picker' ) ) {
 
     class Simple_Icon_Picker {
 
-        /**
-         * Encola los scripts y estilos necesarios.
-         * Llama a esto desde el hook 'admin_enqueue_scripts' de tu plugin/tema.
-         * * @param string $base_url URL absoluta a la carpeta de este componente.
-         */
         public static function enqueue_assets( $base_url ) {
-            // Asegurarse de que la URL termine en slash
             $base_url = trailingslashit( $base_url );
-
-            wp_enqueue_style( 'sip-style', $base_url . 'icon-picker-style.css', array(), '1.0' );
-            wp_enqueue_script( 'sip-script', $base_url . 'icon-picker-script.js', array('jquery'), '1.0', true );
-            
-            // FontAwesome es necesario. Si tu proyecto ya lo tiene, puedes comentar esto.
+            wp_enqueue_style( 'sip-style', $base_url . 'icon-picker-style.css', array(), '1.2' );
+            wp_enqueue_script( 'sip-script', $base_url . 'icon-picker-script.js', array('jquery'), '1.2', true );
             wp_enqueue_style( 'sip-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0' );
         }
 
-        /**
-         * Lista de iconos (Puedes editarla o pasarla por filtro si quieres más flexibilidad)
-         */
         public static function get_icons() {
-            return array(
-                // General
-                'fa-solid fa-users'           => 'Reunión Equipo',
-                'fa-solid fa-briefcase'       => 'Negocios',
-                'fa-solid fa-building'        => 'Oficina',
-                'fa-solid fa-handshake'       => 'Acuerdo',
-                'fa-solid fa-file-contract'   => 'Contrato',
-                'fa-solid fa-signature'       => 'Firma',
-                
-                // Comunicación
-                'fa-solid fa-bullhorn'        => 'Anuncio',
-                'fa-solid fa-microphone'      => 'Conferencia',
-                'fa-solid fa-comments'        => 'Chat',
-                'fa-solid fa-envelope'        => 'Correo',
-                'fa-solid fa-phone'           => 'Llamada',
-                'fa-solid fa-video'           => 'Videollamada',
-                'fa-solid fa-wifi'            => 'Online',
-                
-                // Educación
-                'fa-solid fa-graduation-cap'  => 'Graduación',
-                'fa-solid fa-chalkboard-user' => 'Taller',
-                'fa-solid fa-book'            => 'Libro',
-                'fa-solid fa-lightbulb'       => 'Idea',
-                
-                // Finanzas
-                'fa-solid fa-chart-line'      => 'Finanzas',
-                'fa-solid fa-money-bill'      => 'Dinero',
-                'fa-solid fa-credit-card'     => 'Pago',
-                
-                // Fechas / Eventos
-                'fa-solid fa-cake-candles'    => 'Cumpleaños',
-                'fa-solid fa-champagne-glasses' => 'Fiesta',
-                'fa-solid fa-calendar-check'  => 'Evento',
-                'fa-solid fa-clock'           => 'Horario',
-                'fa-solid fa-bell'            => 'Recordatorio',
-                'fa-solid fa-star'            => 'Importante',
-                'fa-solid fa-exclamation'     => 'Urgente',
-                'fa-solid fa-check'           => 'Completado',
-                'fa-solid fa-plane'           => 'Viaje',
-                'fa-solid fa-location-dot'    => 'Ubicación',
-                'fa-solid fa-laptop'          => 'Remoto',
-                'fa-solid fa-rocket'          => 'Lanzamiento',
-            );
+            $json_file = plugin_dir_path( __FILE__ ) . 'icons.json';
+            
+            if ( file_exists( $json_file ) ) {
+                $content = file_get_contents( $json_file );
+                $icons = json_decode( $content, true );
+                if ( json_last_error() === JSON_ERROR_NONE && is_array( $icons ) ) {
+                    return $icons;
+                }
+            }
+            
+            // Fallback
+            return array( 'General' => array( 'fa-solid fa-star' => 'Estrella' ) );
         }
 
-        /**
-         * Renderiza el HTML del selector.
-         */
         public static function render( $field_name, $current_value = '' ) {
-            $icons = self::get_icons();
+            $categories = self::get_icons();
             ?>
-            <div class="aec-icon-picker-wrapper">
+            <div class="sip-icon-picker-wrapper">
                 <input type="hidden" 
                        name="<?php echo esc_attr( $field_name ); ?>" 
-                       class="aec-icon-input-target"
+                       class="sip-icon-input-target"
                        value="<?php echo esc_attr( $current_value ); ?>">
 
-                <div class="aec-picker-header">
-                    <input type="text" 
-                           class="aec-icon-search" 
-                           placeholder="Buscar icono..." 
-                           autocomplete="off">
-                    
-                    <button type="button" class="aec-remove-icon-btn" title="Quitar icono">
-                        <span class="dashicons dashicons-no-alt"></span> Quitar
+                <div class="sip-picker-header">
+                    <input type="text" class="sip-icon-search" placeholder="Buscar..." autocomplete="off">
+                    <button type="button" class="sip-remove-icon-btn" title="Quitar icono">
+                        <span class="dashicons dashicons-no-alt"></span>
                     </button>
                 </div>
 
-                <div class="aec-icon-grid-container">
-                    <div class="aec-icon-grid">
-                        <?php foreach ( $icons as $icon_class => $label ) : 
-                            $is_selected = ( $current_value === $icon_class ) ? 'selected' : '';
-                        ?>
-                            <div class="aec-icon-option <?php echo $is_selected; ?>" 
-                                 data-value="<?php echo esc_attr( $icon_class ); ?>" 
-                                 data-keywords="<?php echo esc_attr( strtolower( $label ) ); ?>"
-                                 title="<?php echo esc_attr( $label ); ?>">
-                                <i class="<?php echo esc_attr( $icon_class ); ?>"></i>
+                <div class="sip-picker-tabs">
+                    <?php 
+                    $index = 0;
+                    foreach ( $categories as $cat_name => $icons ) : 
+                        $tab_id = sanitize_title( $cat_name );
+                        $active_class = ($index === 0) ? 'active' : '';
+                    ?>
+                        <button type="button" class="sip-tab-btn <?php echo $active_class; ?>" data-target="<?php echo $tab_id; ?>">
+                            <?php echo esc_html( $cat_name ); ?>
+                        </button>
+                    <?php $index++; endforeach; ?>
+                </div>
+
+                <div class="sip-icon-grid-container">
+                    
+                    <?php foreach ( $categories as $cat_name => $icons ) : 
+                        $section_id = sanitize_title( $cat_name );
+                    ?>
+                        <div class="sip-icon-section" id="sip-section-<?php echo $section_id; ?>">
+                            <h4 class="sip-section-title"><?php echo esc_html( $cat_name ); ?></h4>
+                            <div class="sip-icon-grid">
+                                <?php foreach ( $icons as $icon_class => $label ) : 
+                                    $is_selected = ( $current_value === $icon_class ) ? 'selected' : '';
+                                ?>
+                                    <div class="sip-icon-option <?php echo $is_selected; ?>" 
+                                         data-value="<?php echo esc_attr( $icon_class ); ?>" 
+                                         data-keywords="<?php echo esc_attr( strtolower( $label ) ); ?>"
+                                         title="<?php echo esc_attr( $label ); ?>">
+                                        <i class="<?php echo esc_attr( $icon_class ); ?>"></i>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="aec-no-results" style="display:none;">No se encontraron iconos.</div>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <div class="sip-no-results" style="display:none;">No se encontraron iconos.</div>
                 </div>
                 
-                <p class="description">Selecciona un icono de la lista.</p>
+                <p class="description">Haz clic en las pestañas para navegar rápido.</p>
             </div>
             <?php
         }

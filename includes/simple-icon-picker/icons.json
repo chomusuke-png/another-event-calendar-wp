@@ -1,0 +1,63 @@
+{
+    "Oficina y Negocios": {
+        "fa-solid fa-briefcase": "Negocios",
+        "fa-solid fa-building": "Edificio",
+        "fa-solid fa-users": "Reunión",
+        "fa-solid fa-user-tie": "Ejecutivo",
+        "fa-solid fa-handshake": "Acuerdo",
+        "fa-solid fa-file-contract": "Contrato",
+        "fa-solid fa-signature": "Firma",
+        "fa-solid fa-id-card": "Identificación",
+        "fa-solid fa-sitemap": "Organigrama",
+        "fa-solid fa-stapler": "Material",
+        "fa-solid fa-print": "Impresión"
+    },
+    "Comunicación": {
+        "fa-solid fa-bullhorn": "Anuncio",
+        "fa-solid fa-microphone": "Conferencia",
+        "fa-solid fa-headset": "Soporte",
+        "fa-solid fa-comments": "Chat",
+        "fa-solid fa-envelope": "Correo",
+        "fa-solid fa-phone": "Llamada",
+        "fa-solid fa-video": "Videoconferencia",
+        "fa-solid fa-wifi": "Online",
+        "fa-solid fa-share-nodes": "Redes"
+    },
+    "Educación": {
+        "fa-solid fa-graduation-cap": "Graduación",
+        "fa-solid fa-chalkboard-user": "Taller",
+        "fa-solid fa-book": "Libro",
+        "fa-solid fa-certificate": "Certificado",
+        "fa-solid fa-lightbulb": "Idea",
+        "fa-solid fa-microscope": "Ciencia"
+    },
+    "Finanzas": {
+        "fa-solid fa-chart-line": "Crecimiento",
+        "fa-solid fa-chart-pie": "Estadísticas",
+        "fa-solid fa-money-bill": "Dinero",
+        "fa-solid fa-credit-card": "Tarjeta",
+        "fa-solid fa-piggy-bank": "Ahorro",
+        "fa-solid fa-calculator": "Contabilidad",
+        "fa-solid fa-gavel": "Legal"
+    },
+    "Eventos y Fechas": {
+        "fa-solid fa-calendar-check": "Confirmado",
+        "fa-solid fa-calendar-xmark": "Cancelado",
+        "fa-solid fa-clock": "Horario",
+        "fa-solid fa-hourglass-half": "Plazo",
+        "fa-solid fa-bell": "Recordatorio",
+        "fa-solid fa-cake-candles": "Cumpleaños",
+        "fa-solid fa-champagne-glasses": "Fiesta",
+        "fa-solid fa-ticket": "Entrada"
+    },
+    "Estado e Interfaz": {
+        "fa-solid fa-check": "Hecho",
+        "fa-solid fa-xmark": "Error",
+        "fa-solid fa-exclamation": "Aviso",
+        "fa-solid fa-star": "Favorito",
+        "fa-solid fa-heart": "Me gusta",
+        "fa-solid fa-lock": "Privado",
+        "fa-solid fa-eye": "Visible",
+        "fa-solid fa-trash": "Eliminar"
+    }
+}

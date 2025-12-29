@@ -1,60 +1,78 @@
 jQuery(document).ready(function($) {
     
-    // --- Lógica del Icon Picker ---
-
-    // 1. Selección de Icono
-    $('body').on('click', '.aec-icon-option', function() {
+    // --- Lógica de Selección y Borrado (Igual que antes) ---
+    $('body').on('click', '.sip-icon-option', function() {
         var $this = $(this);
-        var $wrapper = $this.closest('.aec-icon-picker-wrapper');
-        var value = $this.data('value');
-
-        // Visual
-        $wrapper.find('.aec-icon-option').removeClass('selected');
+        var $wrapper = $this.closest('.sip-icon-picker-wrapper');
+        $wrapper.find('.sip-icon-option').removeClass('selected');
         $this.addClass('selected');
-
-        // Input
-        $wrapper.find('.aec-icon-input-target').val(value).trigger('change');
+        $wrapper.find('.sip-icon-input-target').val($this.data('value')).trigger('change');
     });
 
-    // 2. Botón "Quitar"
-    $('body').on('click', '.aec-remove-icon-btn', function(e) {
+    $('body').on('click', '.sip-remove-icon-btn', function(e) {
         e.preventDefault();
-        var $wrapper = $(this).closest('.aec-icon-picker-wrapper');
-
-        // Visual: quitar selección
-        $wrapper.find('.aec-icon-option').removeClass('selected');
-
-        // Input: vaciar
-        $wrapper.find('.aec-icon-input-target').val('').trigger('change');
+        var $wrapper = $(this).closest('.sip-icon-picker-wrapper');
+        $wrapper.find('.sip-icon-option').removeClass('selected');
+        $wrapper.find('.sip-icon-input-target').val('').trigger('change');
     });
 
-    // 3. Buscador en tiempo real (Filtro)
-    $('body').on('keyup', '.aec-icon-search', function() {
+    // --- NUEVO: Navegación por Pestañas ---
+    $('body').on('click', '.sip-tab-btn', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var targetId = $btn.data('target'); // ej: "oficina-y-negocios"
+        var $wrapper = $btn.closest('.sip-icon-picker-wrapper');
+        var $container = $wrapper.find('.sip-icon-grid-container');
+        var $targetSection = $wrapper.find('#sip-section-' + targetId);
+
+        // 1. Activar pestaña visualmente
+        $wrapper.find('.sip-tab-btn').removeClass('active');
+        $btn.addClass('active');
+
+        // 2. Calcular posición para scroll
+        if ($targetSection.length) {
+            // Posición actual del scroll + posición relativa del elemento
+            var scrollTop = $container.scrollTop() + $targetSection.position().top;
+            
+            $container.animate({
+                scrollTop: scrollTop
+            }, 300); // 300ms de animación suave
+        }
+    });
+
+    // --- Buscador ---
+    $('body').on('keyup', '.sip-icon-search', function() {
         var term = $(this).val().toLowerCase();
-        var $wrapper = $(this).closest('.aec-icon-picker-wrapper');
-        var $options = $wrapper.find('.aec-icon-option');
-        var found = false;
+        var $wrapper = $(this).closest('.sip-icon-picker-wrapper');
+        var $options = $wrapper.find('.sip-icon-option');
+        var foundTotal = false;
 
         $options.each(function() {
             var $el = $(this);
-            var keywords = $el.data('keywords'); // "reunión equipo..."
-            var iconClass = $el.data('value');   // "fa-solid fa-users"
+            var keywords = $el.data('keywords');
+            var iconClass = $el.data('value');
 
-            // Buscar en palabras clave Y en el nombre de la clase
             if (keywords.indexOf(term) > -1 || iconClass.indexOf(term) > -1) {
                 $el.show();
-                found = true;
+                foundTotal = true;
             } else {
                 $el.hide();
             }
         });
 
-        // Mostrar mensaje si no hay resultados
-        if (found) {
-            $wrapper.find('.aec-no-results').hide();
+        // Ocultar secciones vacías durante la búsqueda
+        $wrapper.find('.sip-icon-section').each(function() {
+            if($(this).find('.sip-icon-option:visible').length === 0) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+
+        if (foundTotal) {
+            $wrapper.find('.sip-no-results').hide();
         } else {
-            $wrapper.find('.aec-no-results').show();
+            $wrapper.find('.sip-no-results').show();
         }
     });
-
 });
