@@ -17,6 +17,7 @@ define( 'AEC_URL', plugin_dir_url( __FILE__ ) );
 require_once AEC_PATH . 'includes/class-aec-cpt.php';
 require_once AEC_PATH . 'includes/class-aec-settings.php';
 require_once AEC_PATH . 'includes/class-aec-display.php';
+require_once AEC_PATH . 'includes/class-aec-icon-picker.php';
 require_once AEC_PATH . 'includes/class-aec-widget.php';
 require_once AEC_PATH . 'includes/class-aec-ajax.php';
 require_once AEC_PATH . 'includes/class-aec-shortcode.php';
@@ -50,3 +51,15 @@ function aec_enqueue_assets() {
     ));
 }
 add_action( 'wp_enqueue_scripts', 'aec_enqueue_assets' );
+
+function aec_enqueue_admin_assets() {
+    // CSS Admin Propio
+    wp_enqueue_style( 'aec-admin-style', AEC_URL . 'assets/css/admin-style.css', array(), '1.0.0' );
+    
+    // JS Admin Propio
+    wp_enqueue_script( 'aec-admin-script', AEC_URL . 'assets/js/admin-script.js', array('jquery'), '1.0.0', true );
+
+    // Font Awesome (También necesario en admin para ver el picker)
+    wp_enqueue_style( 'aec-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0' );
+}
+add_action( 'admin_enqueue_scripts', 'aec_enqueue_admin_assets' );

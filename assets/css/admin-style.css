@@ -1,0 +1,97 @@
+/* Wrapper principal */
+.aec-icon-picker-wrapper {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    max-width: 380px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Header con Buscador y Botón Quitar */
+.aec-picker-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.aec-icon-search {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    background: #f9f9f9;
+}
+.aec-icon-search:focus {
+    background: #fff;
+    border-color: #2271b1;
+    box-shadow: none;
+    outline: none;
+}
+
+.aec-remove-icon-btn {
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    color: #d63638;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+.aec-remove-icon-btn:hover {
+    background: #fcf0f1;
+    border-color: #d63638;
+}
+
+/* Contenedor con Scroll */
+.aec-icon-grid-container {
+    max-height: 220px; /* Altura fija con scroll como Notion */
+    overflow-y: auto;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+}
+
+/* Grid */
+.aec-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+    gap: 6px;
+}
+
+/* Ítem individual */
+.aec-icon-option {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #444;
+    transition: background 0.1s;
+}
+
+.aec-icon-option:hover {
+    background-color: #efefef;
+    transform: scale(1.05);
+}
+
+.aec-icon-option.selected {
+    background-color: #e6f0fa;
+    color: #2271b1;
+    box-shadow: inset 0 0 0 1px #2271b1;
+}
+
+/* Mensaje sin resultados */
+.aec-no-results {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    padding: 20px 0;
+}
